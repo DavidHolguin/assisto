@@ -1,22 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-const SolicitudInstalacion = ({ onClose }) => (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-white rounded-lg p-6 max-w-sm">
-      <h2 className="text-xl font-bold mb-4">Instalar Nuestra Aplicación</h2>
-      <p className="mb-4">¡Obtén la mejor experiencia instalando nuestra app en tu dispositivo!</p>
-      <div className="flex justify-end">
-        <button onClick={onClose} className="bg-gray-200 text-gray-800 px-4 py-2 rounded mr-2">
-          Más tarde
-        </button>
-        <button onClick={onClose} className="bg-purple-600 text-white px-4 py-2 rounded">
-          Instalar
-        </button>
-      </div>
-    </div>
-  </div>
-);
-
 const Header = () => (
   <header className="bg-white shadow-sm">
     <div className="flex justify-between items-center p-4">
@@ -64,29 +47,68 @@ const TarjetaModeloIA = ({ titulo, descripcion }) => (
 export const Home = () => {
   const [mostrarSolicitudInstalacion, setMostrarSolicitudInstalacion] = useState(false);
   const [nombreUsuario, setNombreUsuario] = useState("Usuario");
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   useEffect(() => {
-    // Aquí deberías implementar la lógica para verificar si la app está instalada
-    // y mostrar la solicitud de instalación si no lo está
-    const appInstalada = false; // Cambia esto con tu lógica real
-    if (!appInstalada) {
+    // Lógica para detectar si la app puede ser instalada
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
       setMostrarSolicitudInstalacion(true);
+    });
+
+    // Lógica para detectar si la app ya está instalada
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setMostrarSolicitudInstalacion(false);
     }
 
-    // Aquí deberías obtener el nombre del usuario
-    // Este es solo un ejemplo, reemplázalo con tu lógica real
-    setNombreUsuario("Cristian David");
+    // Obtener el nombre del usuario desde el localStorage
+    const nombreGuardado = localStorage.getItem('nombreUsuario');
+    if (nombreGuardado) {
+      setNombreUsuario(nombreGuardado);
+    } else {
+      // Si no hay nombre guardado, podríamos pedir al usuario que lo ingrese
+      const nombre = prompt('Por favor, ingresa tu nombre:');
+      if (nombre) {
+        setNombreUsuario(nombre);
+        localStorage.setItem('nombreUsuario', nombre);
+      }
+    }
+
+    // Limpieza del event listener
+    return () => {
+      window.removeEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        setDeferredPrompt(e);
+        setMostrarSolicitudInstalacion(true);
+      });
+    };
   }, []);
 
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('El usuario aceptó la instalación de la A2HS');
+        } else {
+          console.log('El usuario rechazó la instalación de la A2HS');
+        }
+        setDeferredPrompt(null);
+      });
+    }
+    setMostrarSolicitudInstalacion(false);
+  };
+
   const modelo = {
-    titulo: "ASSISTO.EDU",
+    titulo: "EDU.ASSISTO",
     descripcion: "Asistente académico para crear recursos, responder preguntas y brindarte apoyo en clase"
   };
 
   return (
     <div className="bg-gray-100 min-h-screen">
       {mostrarSolicitudInstalacion && (
-        <SolicitudInstalacion onClose={() => setMostrarSolicitudInstalacion(false)} />
+        <SolicitudInstalacion onClose={() => setMostrarSolicitudInstalacion(false)} onInstall={handleInstallClick} />
       )}
       <Header />
       <main className="container mx-auto px-4 py-8">
@@ -103,3 +125,21 @@ export const Home = () => {
     </div>
   );
 };
+
+// Asegúrate de que el componente SolicitudInstalacion acepte la prop onInstall
+const SolicitudInstalacion = ({ onClose, onInstall }) => (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white rounded-lg p-6 max-w-sm">
+      <h2 className="text-xl font-bold mb-4">Instalar Nuestra Aplicación</h2>
+      <p className="mb-4">¡Obtén la mejor experiencia instalando nuestra app en tu dispositivo!</p>
+      <div className="flex justify-end">
+        <button onClick={onClose} className="bg-gray-200 text-gray-800 px-4 py-2 rounded mr-2">
+          Más tarde
+        </button>
+        <button onClick={onInstall} className="bg-purple-600 text-white px-4 py-2 rounded">
+          Instalar
+        </button>
+      </div>
+    </div>
+  </div>
+);
