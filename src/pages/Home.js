@@ -3,12 +3,12 @@ import React from 'react';
 const Header = () => (
   <header className="bg-white shadow-sm">
     <div className="flex justify-between items-center p-4">
-      <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 bg-[#f6e5ff] text-purple-600">
+      <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none shadow-inner [box-shadow:inset_0_1px_2px_0_rgba(60,64,67,0.3),_inset_0_2px_6px_2px_rgba(60,64,67,0.15)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 bg-[#f6e5ff] text-purple-600">
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
-      <div className="flex gap-1 bg-purple-100 px-2 py-3 shadow-inner [box-shadow:inset_0_1px_2px_0_rgba(60,64,67,0.3),_inset_0_2px_6px_2px_rgba(60,64,67,0.15)] rounded-full">
+      <div className="flex bg-purple-100 w-20 h-10 items-center justify-center shadow-inner [box-shadow:inset_0_1px_2px_0_rgba(60,64,67,0.3),_inset_0_2px_6px_2px_rgba(60,64,67,0.15)] rounded-full">
         <button className="p-2 bg-purple-100 rounded-full">
         <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" />
@@ -42,15 +42,15 @@ const AIModelCard = ({ title, description }) => (
         </svg>
       </button>
     </div>
-    <p className="text-gray-600 text-sm">{description}</p>
+    <p className="text-gray-600 text-sm text-start">{description}</p>
   </div>
 );
 
 export const Home = () => {
   const model = {
-    title: "Letter of Recommendation",
-    description: "Generate a letter of recommendation to a university..."
-  };
+    title: "Chat ASSISTO.EDU",
+    description: "Ofrece apoyo académico en la currícula oficial de Argentina, crea recursos, responde preguntas y analiza imágenes educativas. "
+};
 
   return (
     <div className="bg-gray-100 min-h-screen">
