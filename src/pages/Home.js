@@ -11,7 +11,7 @@ const Header = () => (
       <div className="flex bg-purple-100 w-20 h-10 items-center justify-center shadow-inner [box-shadow:inset_0_1px_2px_0_rgba(60,64,67,0.3),_inset_0_2px_6px_2px_rgba(60,64,67,0.15)] rounded-full">
         <button>
        
-        <svg xmlns="http://www.w3.org/2000/svg"className="w-5 h-4 text-purple-600" fill="none" stroke="currentColor"  viewBox="0 0 21 26">
+        <svg xmlns="http://www.w3.org/2000/svg"className="w-5 h-4 text-purple-600" fill="none" stroke="currentColor"  viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.5 0C6.876 0 3.937 2.91 3.937 6.5S6.877 13 10.5 13c3.624 0 6.563-2.91 6.563-6.5S14.123 0 10.5 0ZM5.578 6.5c0-2.692 2.204-4.875 4.922-4.875 2.718 0 4.922 2.183 4.922 4.875s-2.204 4.875-4.922 4.875c-2.718 0-4.922-2.183-4.922-4.875ZM2.79 15.6C1.249 15.6 0 16.836 0 18.362v.488c0 2.441 1.274 4.268 3.229 5.447C5.15 25.457 7.735 26 10.5 26c2.765 0 5.349-.544 7.271-1.703C19.726 23.12 21 21.291 21 18.85v-.488c0-1.526-1.249-2.762-2.789-2.762H2.79Zm-1.148 2.762c0-.628.513-1.137 1.148-1.137h15.422c.635 0 1.148.509 1.148 1.137v.488c0 1.784-.892 3.125-2.441 4.06-1.581.953-3.837 1.465-6.418 1.465-2.58 0-4.837-.512-6.418-1.466-1.549-.934-2.441-2.275-2.441-4.059v-.488Z"></path>
         </svg>
 
